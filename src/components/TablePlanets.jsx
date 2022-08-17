@@ -3,7 +3,6 @@ import contextStarWars from '../context/StarWarsContext';
 
 export default function TablePlanets() {
   const context = useContext(contextStarWars);
-  console.log(context);
 
   useEffect(() => {
     const fetchPlanets = async () => {
