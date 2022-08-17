@@ -6,9 +6,10 @@ export default function TablePlanets() {
 
   useEffect(() => {
     const fetchPlanets = async () => {
-      const fetchedPlanets = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const planetsJson = await fetchedPlanets.json();
-      (planetsJson.results).forEach((planet) => {
+      const planetsJson = await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
+        .then((response) => response.json());
+
+      await planetsJson.results.forEach((planet) => {
         delete planet.residents;
       });
       context.setFilteredPlanets(planetsJson.results);

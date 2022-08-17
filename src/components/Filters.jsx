@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import contextStarWars from '../context/StarWarsContext';
 
 export default function Filters() {
@@ -14,12 +14,21 @@ export default function Filters() {
     handleOnChange,
     handleOnChangeNumeric } = useContext(contextStarWars);
 
+  const columnOptions = ['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  const [selectedColumns, setSelectedColumns] = useState([]);
+
   useEffect(() => {
     setFilteredPlanets(planets
       .filter((planet) => planet.name.includes(filterByName.name)));
   }, [filterByName.name]);
 
+  const selectColumnOnClick = () => {
+    setSelectedColumns([...selectedColumns, column]);
+  };
+
   const filterNumeric = () => {
+    selectColumnOnClick();
     const valueNumericNumber = JSON.parse(valueNumeric);
     switch (comparison) {
     case 'maior que':
@@ -59,11 +68,8 @@ export default function Filters() {
           data-testid="column-filter"
           onChange={ handleOnChangeNumeric }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          { columnOptions.filter((option) => !selectedColumns.includes(option))
+            .map((optionColumn) => <option key={ optionColumn }>{optionColumn}</option>)}
         </select>
       </label>
       <label htmlFor="comparison-filter">
