@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
+import contextStarWars from '../context/StarWarsContext';
 
 export default function TablePlanets() {
-  const [planets, setPlanets] = useState([]);
+  const context = useContext(contextStarWars);
+  console.log(context);
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -10,7 +12,8 @@ export default function TablePlanets() {
       (planetsJson.results).forEach((planet) => {
         delete planet.residents;
       });
-      setPlanets(planetsJson.results);
+      context.setFilteredPlanets(planetsJson.results);
+      context.setPlanets(planetsJson.results);
     };
     fetchPlanets();
   }, []);
@@ -35,23 +38,26 @@ export default function TablePlanets() {
         </tr>
       </thead>
       <tbody>
-        { planets.map((planet) => (
-          <tr key={ planet.name }>
-            <th>{planet.name}</th>
-            <th>{planet.rotation_period}</th>
-            <th>{planet.orbital_period}</th>
-            <th>{planet.diameter}</th>
-            <th>{planet.climate}</th>
-            <th>{planet.gravity}</th>
-            <th>{planet.terrain}</th>
-            <th>{planet.surface_water}</th>
-            <th>{planet.population}</th>
-            <th>{planet.films}</th>
-            <th>{planet.created}</th>
-            <th>{planet.edited}</th>
-            <th>{planet.url}</th>
-          </tr>
-        ))}
+        {
+          context.filteredPlanets
+            && (context.filteredPlanets).map((planet) => (
+              <tr key={ planet.name }>
+                <th>{planet.name}</th>
+                <th>{planet.rotation_period}</th>
+                <th>{planet.orbital_period}</th>
+                <th>{planet.diameter}</th>
+                <th>{planet.climate}</th>
+                <th>{planet.gravity}</th>
+                <th>{planet.terrain}</th>
+                <th>{planet.surface_water}</th>
+                <th>{planet.population}</th>
+                <th>{planet.films}</th>
+                <th>{planet.created}</th>
+                <th>{planet.edited}</th>
+                <th>{planet.url}</th>
+              </tr>
+            ))
+        }
       </tbody>
     </table>
   );
