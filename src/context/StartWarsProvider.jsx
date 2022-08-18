@@ -6,29 +6,26 @@ export default function StartWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [name, setName] = useState('');
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [valueNumeric, setValueNumeric] = useState(0);
+  const [filterByNumericValues, setFilterByNumericValues] = useState(
+    { column: 'population', comparison: 'maior que', value: '0' },
+  );
   const [historyOfFilter, setHistoryOfFilter] = useState([]);
+  const [order, setOrder] = useState({ columnOrder: 'population', sort: 'ASC' });
 
   const handleOnChange = ({ target: { value } }) => {
     setName(value);
   };
 
   const handleOnChangeNumeric = ({ target }) => {
-    switch (target.name) {
-    case 'column':
-      setColumn(target.value);
-      break;
-    case 'comparison':
-      setComparison(target.value);
-      break;
-    case 'value':
-      setValueNumeric(target.value);
-      break;
-    default:
-      break;
-    }
+    const { value } = target;
+
+    setFilterByNumericValues({ ...filterByNumericValues, [target.name]: value });
+  };
+
+  const handleOnChangeOrder = ({ target }) => {
+    const { value } = target;
+
+    setOrder({ ...order, [target.name]: value });
   };
 
   return (
@@ -38,10 +35,11 @@ export default function StartWarsProvider({ children }) {
         filteredPlanets,
         setFilteredPlanets,
         filterByName: { name },
-        filterByNumericValues: { column, comparison, valueNumeric },
-        setColumn,
-        setComparison,
-        setValueNumeric,
+        filterByNumericValues,
+        setFilterByNumericValues,
+        order,
+        setOrder,
+        handleOnChangeOrder,
         handleOnChange,
         handleOnChangeNumeric,
         historyOfFilter,

@@ -6,16 +6,15 @@ export default function Filters() {
     setFilteredPlanets,
     filterByName,
     filterByNumericValues: {
-      valueNumeric,
+      value,
       column,
       comparison,
     },
+    setFilterByNumericValues,
     handleOnChange,
     handleOnChangeNumeric,
     setHistoryOfFilter,
-    setColumn,
-    setValueNumeric,
-    setComparison } = useContext(contextStarWars);
+  } = useContext(contextStarWars);
 
   const columnOptions = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
@@ -32,10 +31,10 @@ export default function Filters() {
 
   const filterNumeric = () => {
     selectColumnOnClick();
-    setHistoryOfFilter((history) => [...history, [column, comparison, valueNumeric]]);
-    setColumn('population');
-    setValueNumeric('0');
-    setComparison('maior que');
+    setHistoryOfFilter((history) => [...history, [column, comparison, value]]);
+    setFilterByNumericValues({
+      value: '0', column: 'population', comparison: 'maior que',
+    });
   };
 
   return (
@@ -56,7 +55,13 @@ export default function Filters() {
           onChange={ handleOnChangeNumeric }
         >
           { columnOptions.filter((option) => !selectedColumns.includes(option))
-            .map((optionColumn) => <option key={ optionColumn }>{optionColumn}</option>)}
+            .map((optionColumn) => (
+              <option
+                key={ optionColumn }
+                data-testid={ optionColumn }
+              >
+                {optionColumn}
+              </option>))}
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -74,7 +79,7 @@ export default function Filters() {
         </select>
       </label>
       <input
-        value={ valueNumeric }
+        value={ value }
         name="value"
         type="number"
         onChange={ handleOnChangeNumeric }
