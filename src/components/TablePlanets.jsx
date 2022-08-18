@@ -21,6 +21,7 @@ export default function TablePlanets() {
   }, []);
 
   const switchFilterNumeric = ([historyColumn, historyComparison, historyValue]) => {
+    console.log(historyValue);
     const valueNumericNumber = JSON.parse(historyValue);
     console.log(historyColumn, historyComparison, historyValue);
     switch (historyComparison) {
