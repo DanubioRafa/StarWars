@@ -10,9 +10,12 @@ export default function Filters() {
       column,
       comparison,
     },
-    filteredPlanets,
     handleOnChange,
-    handleOnChangeNumeric } = useContext(contextStarWars);
+    handleOnChangeNumeric,
+    setHistoryOfFilter,
+    setColumn,
+    setValueNumeric,
+    setComparison } = useContext(contextStarWars);
 
   const columnOptions = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
@@ -29,26 +32,10 @@ export default function Filters() {
 
   const filterNumeric = () => {
     selectColumnOnClick();
-    const valueNumericNumber = JSON.parse(valueNumeric);
-    switch (comparison) {
-    case 'maior que':
-      setFilteredPlanets(filteredPlanets.filter((planet) => planet[column]
-       > valueNumericNumber));
-      break;
-
-    case 'menor que':
-      setFilteredPlanets(filteredPlanets.filter((planet) => planet[column]
-       < valueNumericNumber));
-      break;
-
-    case 'igual a':
-      setFilteredPlanets(filteredPlanets.filter((planet) => planet[column]
-      === valueNumeric));
-      break;
-
-    default:
-      break;
-    }
+    setHistoryOfFilter((history) => [...history, [column, comparison, valueNumeric]]);
+    setColumn('population');
+    setValueNumeric('0');
+    setComparison('maior que');
   };
 
   return (

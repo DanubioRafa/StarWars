@@ -9,6 +9,7 @@ export default function StartWarsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valueNumeric, setValueNumeric] = useState(0);
+  const [historyOfFilter, setHistoryOfFilter] = useState([]);
 
   const handleOnChange = ({ target: { value } }) => {
     setName(value);
@@ -34,12 +35,17 @@ export default function StartWarsProvider({ children }) {
     <contextStarWars.Provider
       value={ { planets,
         setPlanets,
+        filteredPlanets,
         setFilteredPlanets,
         filterByName: { name },
         filterByNumericValues: { column, comparison, valueNumeric },
-        filteredPlanets,
+        setColumn,
+        setComparison,
+        setValueNumeric,
         handleOnChange,
-        handleOnChangeNumeric } }
+        handleOnChangeNumeric,
+        historyOfFilter,
+        setHistoryOfFilter } }
     >
       {children}
     </contextStarWars.Provider>
