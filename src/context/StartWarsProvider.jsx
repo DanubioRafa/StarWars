@@ -28,6 +28,43 @@ export default function StartWarsProvider({ children }) {
     setOrder({ ...order, [target.name]: value });
   };
 
+  const isValueUnknown = (value1, value2) => {
+    const valueAscLastIndex = 99999999999999;
+    const valueDescLastIndex = -999999999;
+    const unknown = order.sort === 'ASC' ? valueAscLastIndex : valueDescLastIndex;
+
+    const valuePlanet1 = value1 === 'unknown' ? unknown
+      : JSON.parse(value1);
+    const valuePlanet2 = value2 === 'unknown' ? unknown
+      : JSON.parse(value2);
+
+    return [valuePlanet1, valuePlanet2];
+  };
+
+  const orderPlanets = () => {
+    if (order.sort === 'ASC') {
+      const orderedAscFilteredPlanets = filteredPlanets.sort((planet1, planet2) => {
+        const [value1, value2] = isValueUnknown(
+          planet1[order.columnOrder], planet2[order.columnOrder],
+        );
+
+        return (value1 - value2);
+      });
+
+      setFilteredPlanets([...orderedAscFilteredPlanets]);
+    } else {
+      const orderedDescFilteredPlanets = (filteredPlanets.sort((planet1, planet2) => {
+        const [value1, value2] = isValueUnknown(
+          planet1[order.columnOrder], planet2[order.columnOrder],
+        );
+
+        return (value2 - value1);
+      }));
+
+      setFilteredPlanets([...orderedDescFilteredPlanets]);
+    }
+  };
+
   return (
     <contextStarWars.Provider
       value={ { planets,
@@ -43,7 +80,8 @@ export default function StartWarsProvider({ children }) {
         handleOnChange,
         handleOnChangeNumeric,
         historyOfFilter,
-        setHistoryOfFilter } }
+        setHistoryOfFilter,
+        orderPlanets } }
     >
       {children}
     </contextStarWars.Provider>

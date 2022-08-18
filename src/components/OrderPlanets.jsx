@@ -2,28 +2,10 @@ import React, { useContext } from 'react';
 import contextStarWars from '../context/StarWarsContext';
 
 export default function OrderPlanets() {
-  const { filteredPlanets,
-    setFilteredPlanets,
-    order: { sort, columnOrder },
+  const { orderPlanets,
     handleOnChangeOrder } = useContext(contextStarWars);
   const columnOptions = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-
-  const orderPlanets = () => {
-    if (sort === 'ASC') {
-      const orderedAscFilteredPlanets = filteredPlanets.sort((planet1, planet2) => (
-        JSON.parse(planet1[columnOrder]) - JSON.parse(planet2[columnOrder])
-      ));
-
-      setFilteredPlanets(orderedAscFilteredPlanets);
-    } else {
-      const orderedDescFilteredPlanets = (filteredPlanets.sort((a, b) => (
-        JSON.parse(b[columnOrder]) - JSON.parse(a[columnOrder])
-      )));
-
-      setFilteredPlanets(orderedDescFilteredPlanets);
-    }
-  };
 
   return (
     <div onChange={ handleOnChangeOrder }>
