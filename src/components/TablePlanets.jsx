@@ -21,27 +21,16 @@ export default function TablePlanets() {
   }, []);
 
   const switchFilterNumeric = ([historyColumn, historyComparison, historyValue]) => {
-    console.log(historyValue);
     const valueNumericNumber = JSON.parse(historyValue);
-    console.log(historyColumn, historyComparison, historyValue);
-    switch (historyComparison) {
-    case 'maior que':
+    if (historyComparison === 'maior que') {
       setFilteredPlanets(filteredPlanets.filter((planet) => planet[historyColumn]
          > valueNumericNumber));
-      break;
-
-    case 'menor que':
+    } else if (historyComparison === 'menor que') {
       setFilteredPlanets(filteredPlanets.filter((planet) => planet[historyColumn]
          < valueNumericNumber));
-      break;
-
-    case 'igual a':
+    } else {
       setFilteredPlanets(filteredPlanets.filter((planet) => planet[historyColumn]
         === historyValue));
-      break;
-
-    default:
-      break;
     }
   };
 

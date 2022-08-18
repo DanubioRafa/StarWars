@@ -167,3 +167,49 @@ describe('Testa os filtros da Aplicação', () => {
 
   });
 })
+
+describe('Testa o sort da aplicação', () => {
+  test('se é possível ordenar na ordem crescente de população', async () => {
+
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockAPI),
+    });
+
+    await act(async () => render(<StartWarsProvider><App/></StartWarsProvider>));
+
+    const radioCrescente = screen.getByLabelText('Crescente');
+    const buttonOrdenar = screen.getByRole('button', { name: /ordenar/i });
+    const selectColumn = screen.getByTestId('column-sort');
+
+    userEvent.selectOptions(selectColumn, 'population');
+    userEvent.click(radioCrescente);
+    userEvent.click(buttonOrdenar);
+
+    console.log(screen.logTestingPlaygroundURL());
+    expect(screen.queryAllByTestId('planet-name')[0]).toHaveTextContent('Yavin IV');
+  })
+
+    test('se é possível ordenar na ordem decrescente de população', async () => {
+  
+      jest.spyOn(global, 'fetch');
+      global.fetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue(mockAPI),
+      });
+  
+      await act(async () => render(<StartWarsProvider><App/></StartWarsProvider>));
+  
+
+      const radioDecrescente = screen.getByLabelText(/decrescente/i);
+      const buttonOrdenar = screen.getByRole('button', { name: /ordenar/i });
+      const selectColumn = screen.getByTestId('column-sort');
+  
+      userEvent.selectOptions(selectColumn, 'population');
+      userEvent.click(radioDecrescente);
+      userEvent.click(buttonOrdenar);
+  
+      console.log(screen.logTestingPlaygroundURL());
+      expect(screen.queryAllByTestId('planet-name')[0]).toHaveTextContent('Coruscant');
+    })
+
+})
