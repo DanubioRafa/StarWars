@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import contextStarWars from '../context/StarWarsContext';
+import '../styles/filters.scss';
 
 export default function Filters() {
   const { planets,
@@ -38,7 +39,7 @@ export default function Filters() {
   };
 
   return (
-    <div>
+    <section id="filters">
       <input
         value={ filterByName.name }
         type="text"
@@ -93,6 +94,6 @@ export default function Filters() {
         Filtrar
 
       </button>
-    </div>
+    </section>
   );
 }

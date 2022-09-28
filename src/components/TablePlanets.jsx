@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import contextStarWars from '../context/StarWarsContext';
+import '../styles/tableplanets.scss';
 
 export default function TablePlanets() {
   const context = useContext(contextStarWars);
@@ -52,7 +53,7 @@ export default function TablePlanets() {
   }, [historyOfFilter]);
 
   return (
-    <div>
+    <main>
       <button
         type="button"
         onClick={ removeAllFilters }
@@ -112,6 +113,6 @@ export default function TablePlanets() {
           }
         </tbody>
       </table>
-    </div>
+    </main>
   );
 }

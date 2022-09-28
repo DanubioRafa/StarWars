@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import contextStarWars from '../context/StarWarsContext';
+import '../styles/orderplanets.scss';
 
 export default function OrderPlanets() {
   const { orderPlanets,
@@ -8,7 +9,7 @@ export default function OrderPlanets() {
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
   return (
-    <div onChange={ handleOnChangeOrder }>
+    <section id="orderplanets" onChange={ handleOnChangeOrder }>
       <select name="columnOrder" data-testid="column-sort">
         { columnOptions.map((columnOption) => (
           <option key={ columnOption }>{columnOption}</option>
@@ -44,6 +45,6 @@ export default function OrderPlanets() {
         Ordenar
 
       </button>
-    </div>
+    </section>
   );
 }

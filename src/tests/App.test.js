@@ -186,7 +186,6 @@ describe('Testa o sort da aplicação', () => {
     userEvent.click(radioCrescente);
     userEvent.click(buttonOrdenar);
 
-    console.log(screen.logTestingPlaygroundURL());
     expect(screen.queryAllByTestId('planet-name')[0]).toHaveTextContent('Yavin IV');
   })
 
@@ -208,7 +207,6 @@ describe('Testa o sort da aplicação', () => {
       userEvent.click(radioDecrescente);
       userEvent.click(buttonOrdenar);
   
-      console.log(screen.logTestingPlaygroundURL());
       expect(screen.queryAllByTestId('planet-name')[0]).toHaveTextContent('Coruscant');
     })
 

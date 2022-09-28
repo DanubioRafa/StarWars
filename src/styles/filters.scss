@@ -1,0 +1,16 @@
+@use 'variables' as *;
+
+#filters {
+  display: flex;
+  justify-content: space-around;
+
+  input {
+    background-color: $color-back;
+    border: 3px solid $fourth-color;
+    outline: none;
+    border-radius: 5px;
+    height: 25px;
+    color: $third-color;
+  }
+
+}
